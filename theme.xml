@@ -12,19 +12,19 @@
         </file>
         <file path="custom.photos.css" custom="0">
             <description locale="en_US">Core Photos app CSS</description>
-            <description locale="ru_RU">Основной CSS приложения «Фото»</description>
+            <description locale="ru_RU">Основной CSS приложения Фото</description>
         </file>
         <file path="custom.photos.mobile.css" custom="0">
             <description locale="en_US">Additional Photos app CSS for multi-touch mobile devices</description>
-            <description locale="ru_RU">Дополнительный CSS приложения «Фото» для мобильных устройств</description>
+            <description locale="ru_RU">Дополнительный CSS приложения Фото для мобильных устройств</description>
         </file>        
         <file path="content.html" custom="0">
             <description locale="en_US">Main layout and navigation for the Photos app content</description>
-            <description locale="ru_RU">Основное макет вывода содержимого и навигации в приложении «Фото»</description>
+            <description locale="ru_RU">Основное макет вывода содержимого и навигации в приложении Фото</description>
         </file>
         <file path="head.html" custom="0">
             <description locale="en_US">Photos app's &lt;head&gt; instructions</description>
-            <description locale="en_US">Блок &lt;head&gt; приложения «Фото»</description>
+            <description locale="en_US">Блок &lt;head&gt; приложения Фото</description>
         </file>
         <file path="view-thumbs.html" custom="0">
             <description locale="en_US">Photo list thumbnails view</description>
@@ -36,7 +36,7 @@
         </file>
         <file path="view-plain.html" custom="0">
             <description locale="en_US">Photo list plain view</description>
-            <description locale="ru_RU">Список фотографий «простыней»</description>
+            <description locale="ru_RU">Список фотографий простыней</description>
         </file>
         <file path="photo.html" custom="0">
             <description locale="en_US">One photo and its details</description>
@@ -84,17 +84,4 @@
         </file>
     </files>
 
-    <description locale="ru_RU">Семейство адаптивных тем дизайна.</description>
-    <thumbs>
-        <thumb>100x100</thumb>
-        <thumb>155x155</thumb>
-        <thumb>155x320</thumb>
-        <thumb>210x100</thumb>
-        <thumb>210x210</thumb>
-        <thumb>320x100</thumb>
-        <thumb>320x155</thumb>
-        <thumb>320x320</thumb>
-        <thumb>250x300</thumb>
-        <thumb>970</thumb>
-    </thumbs>
 </theme>
