@@ -1,0 +1,152 @@
+{if isset($category)}{$selected_category=$category.id}{else}{$selected_category=null}{/if}
+{$categories = $wa->shop->categories(0, null, true)}
+{if $categories}
+<div class="box category">
+    <div class="box-heading">Категории</div>
+    <div class="box-content">
+        <div class="box-category">
+            {wa_print_tree tree=$categories selected=$selected_category unfolded=true collapsible_class='parent' class="menu-v category-tree" elem ='<a href=":url" title=":name">:name</a>'}
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+{/if}
+
+
+<div class="box category">
+    <div class="box-heading">Фото</div>
+    <div class="box-content">
+        <div class="box-category">
+
+            <ul class="menu-h">
+
+                <!-- core filters -->
+                <li {if $wa->currentUrl() == $wa_app_url} class="selected"{/if}>
+                    <a href="{$wa_app_url}">[`Photostream`]</a>
+                </li>
+                <li {if $wa->param('action') neq 'page' && $wa->param('action') neq 'album' && $wa->param('hash') == 'favorites'} class="selected"{/if}>
+                    <a href="{$wa_app_url}favorites/">[`Editors’ choice`]</a>
+                </li>
+
+                <!-- plugins -->
+                {* @event frontend_sidebar.%plugin_id%.menu *}
+                {foreach $frontend_sidebar as $plugin_id => $item}{if !empty($item.menu)}
+                <li>{$item.menu}</li>
+                {/if}{/foreach}
+
+                <!-- pages -->
+                {* static info page list *}
+                {if $photos_pages = $wa->photos->pages()}
+                {$page_id = $wa->param('page_id')}
+                {foreach $photos_pages as $p}
+                <li {if $page_id eq $p.id} class="selected"{/if}><a href="{$p.url}" title="{$p.title}">{$p.name}</a></li>
+                {/foreach}
+                {/if}
+
+
+                <!-- albums -->
+                {if $albums = $wa->photos->albums(0)}
+                <li class="parent">
+                    <a><b>[`Albums`]</b></a>
+                    {wa_print_tree tree=$albums collapsible_class='parent' class="menu-v album-tree" elem ='<a href=":url">:name</a>'}
+                </li>
+                {/if}
+
+                <!-- more plugins -->
+                {* @event frontend_sidebar.%plugin_id%.section *}
+                {capture name="more"}{strip}
+                {foreach $frontend_sidebar as $plugin_id => $item}{if !empty($item.section)}
+                <hr><div class="block">{$item.section}</div>
+                {/if}{/foreach}
+                {strip}{/capture}
+
+
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
+
+{if $latest_posts = $wa->blog->posts()}
+<div class="box man">
+    <div class="box-heading"><span>Новости</span></div>
+    <div class="box-content">
+        {foreach $latest_posts as $post}
+        <div class="short-post">
+            <h3>
+                <a href="{$post.link}">{$post.title}</a>
+                {* @event prepare_posts_frontend.%plugin_id%.post_title *}
+                {if !empty($post.plugins.post_title)}
+                {foreach $post.plugins.post_title as $plugin => $output}{$output}{/foreach}
+                {/if}
+            </h3>
+            <div class="credentials">
+                {if $post.user.posts_link}
+                <a href="{$post.user.posts_link}" class="username">{$post.user.name}</a>
+                {else}
+                <span class="username">{$post.user.name}</span>
+                {/if}
+                {$post.datetime|wa_datetime:"humandate"}
+            </div>
+            <p>
+                {$post.text|strip_tags|truncate:400}
+            </p>
+        </div>
+        {if $post@iteration == 3}{break}{/if}
+        {/foreach}
+        <div class="clear"></div>
+    </div>
+</div>
+{/if}
+
+{if $photos = $wa->photos->photos()}
+<div class="box man" id="last_photos">
+    <div class="box-heading"><span>Последние фото</span></div>
+    <div class="box-content">
+        <ul class="view-thumbs">
+            {foreach from=$photos item=photo}
+            <li{if $photo.stack_count > 0} class="stacked"{/if}>
+                <div class="image">
+                    {if empty($photo.frontend_link)}
+                    {$wa->photos->getImgHtml($photo, "200x0", ["class"=>"shadowed"])}
+                    {else}
+                    <a href="{$photo.frontend_link|default:'#'}">
+                        {$wa->photos->getImgHtml($photo, "200x0", ["class"=>"shadowed"])}
+                    </a>
+                    {/if}
+                </div>
+                <h5>{$photo.name}</h5>
+                {if $photo.description}
+                <p>{$photo.description}</p>
+                {/if}
+            </li>
+            {if $photo@iteration == 3}{break}{/if}
+            {/foreach}
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div>
+{/if}
+
+<!-- tag cloud -->
+{if $cloud = $wa->photos->tags()}
+<div class="box man">
+    <div class="box-heading"><span>Теги</span></div>
+    <div class="box-content">
+
+        <div class="tags">
+            {foreach $cloud as $tag}
+            <a href="{$wa_app_url}tag/{$tag.uri_name}/" style="font-size: {$tag.size}%; opacity: {$tag.opacity}">{$tag.name|escape}</a>
+            {/foreach}
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+{/if}
+
+
+
+
+
