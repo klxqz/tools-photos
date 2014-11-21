@@ -1,23 +1,24 @@
-{if $wa->shop && $wa->shop->categories(0, null, true)}
 {if isset($category)}{$selected_category=$category.id}{else}{$selected_category=null}{/if}
-<div class="box category">
-    <div class="box-heading">Категории</div>
-    <div class="box-content">
-        <div class="box-category">
-            {wa_print_tree tree=$wa->shop->categories(0, null, true) selected=$selected_category unfolded=true collapsible_class='parent' class="menu-v category-tree" elem ='<a href=":url" title=":name">:name</a>'}
+{$categories = $wa->shop->categories(0, null, true)}
+{if $categories}
+    <div class="box category">
+        <div class="box-heading">[`Catalog`]</div>
+        <div class="box-content">
+            <div class="box-category">
+                {wa_print_tree tree=$categories selected=$selected_category unfolded=true collapsible_class='parent' class=" category-tree" elem ='<a href=":url" title=":name">:name</a>'}
+            </div>
         </div>
     </div>
-</div>
-<div class="clear"></div>
+    <div class="clear"></div>
 {/if}
 
 
 <div class="box category">
-    <div class="box-heading">Фото</div>
+    <div class="box-heading">[`Photos`]</div>
     <div class="box-content">
         <div class="box-category">
 
-            <ul class="menu-h">
+            <ul>
 
                 <!-- core filters -->
                 <li {if $wa->currentUrl() == $wa_app_url} class="selected"{/if}>
